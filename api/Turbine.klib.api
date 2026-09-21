@@ -68,6 +68,37 @@ sealed interface <#A: out kotlin/Any?> app.cash.turbine/Event { // app.cash.turb
     }
 }
 
+final class <#A: kotlin/Any?> app.cash.turbine/WindowSource { // app.cash.turbine/WindowSource|null[0]
+    final val name // app.cash.turbine/WindowSource.name|{}name[0]
+        final fun <get-name>(): kotlin/String // app.cash.turbine/WindowSource.name.<get-name>|<get-name>(){}[0]
+
+    final fun expectComplete() // app.cash.turbine/WindowSource.expectComplete|expectComplete(){}[0]
+    final fun expectError(kotlin/String? = ..., kotlin/Function1<kotlin/Throwable, kotlin/Boolean> = ...) // app.cash.turbine/WindowSource.expectError|expectError(kotlin.String?;kotlin.Function1<kotlin.Throwable,kotlin.Boolean>){}[0]
+    final fun expectItem(kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ...) // app.cash.turbine/WindowSource.expectItem|expectItem(kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>){}[0]
+    final fun expectItems(kotlin/Int, kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ...) // app.cash.turbine/WindowSource.expectItems|expectItems(kotlin.Int;kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>){}[0]
+    final fun expectTerminal() // app.cash.turbine/WindowSource.expectTerminal|expectTerminal(){}[0]
+    final fun matchingItem(kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean>): app.cash.turbine/WindowAlternative // app.cash.turbine/WindowSource.matchingItem|matchingItem(kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>){}[0]
+    final fun matchingTerminal(): app.cash.turbine/WindowAlternative // app.cash.turbine/WindowSource.matchingTerminal|matchingTerminal(){}[0]
+}
+
+final class app.cash.turbine/TurbineWindow { // app.cash.turbine/TurbineWindow|null[0]
+    final fun <#A1: kotlin/Any?> source(app.cash.turbine/ReceiveTurbine<#A1>, kotlin/String? = ...): app.cash.turbine/WindowSource<#A1> // app.cash.turbine/TurbineWindow.source|source(app.cash.turbine.ReceiveTurbine<0:0>;kotlin.String?){0§<kotlin.Any?>}[0]
+    final fun expectAnyOf(kotlin/Array<out app.cash.turbine/WindowAlternative>...) // app.cash.turbine/TurbineWindow.expectAnyOf|expectAnyOf(kotlin.Array<out|app.cash.turbine.WindowAlternative>...){}[0]
+}
+
+final class app.cash.turbine/WindowAlternative // app.cash.turbine/WindowAlternative|null[0]
+
+final class app.cash.turbine/WindowEvent { // app.cash.turbine/WindowEvent|null[0]
+    final val event // app.cash.turbine/WindowEvent.event|{}event[0]
+        final fun <get-event>(): app.cash.turbine/Event<*> // app.cash.turbine/WindowEvent.event.<get-event>|<get-event>(){}[0]
+    final val sourceName // app.cash.turbine/WindowEvent.sourceName|{}sourceName[0]
+        final fun <get-sourceName>(): kotlin/String // app.cash.turbine/WindowEvent.sourceName.<get-sourceName>|<get-sourceName>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // app.cash.turbine/WindowEvent.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // app.cash.turbine/WindowEvent.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // app.cash.turbine/WindowEvent.toString|toString(){}[0]
+}
+
 final fun <#A: kotlin/Any?> (app.cash.turbine/Turbine<#A>).app.cash.turbine/plusAssign(#A) // app.cash.turbine/plusAssign|plusAssign@app.cash.turbine.Turbine<0:0>(0:0){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/expectMostRecentItem(kotlin/String? = ...): #A // app.cash.turbine/expectMostRecentItem|expectMostRecentItem@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/expectNoEvents(kotlin/String? = ...) // app.cash.turbine/expectNoEvents|expectNoEvents@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
@@ -77,6 +108,7 @@ final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/takeItem(kotlin/String? = ...): #A // app.cash.turbine/takeItem|takeItem@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).app.cash.turbine/testIn(kotlinx.coroutines/CoroutineScope, kotlin.time/Duration? = ..., kotlin/String? = ...): app.cash.turbine/ReceiveTurbine<#A> // app.cash.turbine/testIn|testIn@kotlinx.coroutines.flow.Flow<0:0>(kotlinx.coroutines.CoroutineScope;kotlin.time.Duration?;kotlin.String?){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> app.cash.turbine/Turbine(kotlin.time/Duration? = ..., kotlin/String? = ...): app.cash.turbine/Turbine<#A> // app.cash.turbine/Turbine|Turbine(kotlin.time.Duration?;kotlin.String?){0§<kotlin.Any?>}[0]
+final suspend fun (app.cash.turbine/TurbineContext).app.cash.turbine/awaitWindow(kotlin.time/Duration? = ..., kotlin/Function1<app.cash.turbine/TurbineWindow, kotlin/Unit>): kotlin.collections/List<app.cash.turbine/WindowEvent> // app.cash.turbine/awaitWindow|awaitWindow@app.cash.turbine.TurbineContext(kotlin.time.Duration?;kotlin.Function1<app.cash.turbine.TurbineWindow,kotlin.Unit>){}[0]
 final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/awaitComplete(kotlin/String? = ...) // app.cash.turbine/awaitComplete|awaitComplete@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
 final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/awaitError(kotlin/String? = ...): kotlin/Throwable // app.cash.turbine/awaitError|awaitError@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
 final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/awaitEvent(kotlin/String? = ...): app.cash.turbine/Event<#A> // app.cash.turbine/awaitEvent|awaitEvent@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]

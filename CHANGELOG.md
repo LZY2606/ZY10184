@@ -4,7 +4,7 @@
 [Unreleased]: https://github.com/cashapp/turbine/compare/1.2.0...HEAD
 
 ### Added
-- Nothing yet!
+- Add `awaitWindow`, a multi-source event window assertion for `turbineScope`: bind several `ReceiveTurbine`s by stable name and consume events by matcher without imposing an inter-source order. Supports exact item counts, any-of alternatives, same-source ordering, and terminal events. The window is consuming (not transactional): consumed events stay consumed on failure and are listed in the error along with unsatisfied and impossible expectations.
 
 ### Changed
 - Nothing yet!

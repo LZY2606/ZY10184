@@ -100,7 +100,7 @@ internal class ChannelTurbine<T>(
   /** Non-null if [channel] is being populated by an external `Flow` collection. */
   private val collectJob: Job?,
   private val timeout: Duration?,
-  private val name: String?,
+  val name: String?,
 ) : Turbine<T> {
   private suspend fun <T> withTurbineTimeout(block: suspend () -> T): T {
     return if (timeout != null) {
@@ -180,6 +180,15 @@ internal class ChannelTurbine<T>(
 
   private var ignoreTerminalEvents = false
   private var ignoreRemainingEvents = false
+
+  /**
+   * Records that a terminal event was consumed without going through [channel]'s read methods (e.g.
+   * by an [awaitWindow] window selecting over multiple sources), so that [ensureAllEventsConsumed]
+   * does not report the terminal event as unconsumed.
+   */
+  internal fun markTerminalEventConsumed() {
+    ignoreRemainingEvents = true
+  }
 
   override suspend fun cancelAndIgnoreRemainingEvents() {
     cancel()

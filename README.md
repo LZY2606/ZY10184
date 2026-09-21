@@ -131,6 +131,60 @@ Otherwise, make sure to call one of the following methods before the end of your
 
 Otherwise, your test will hang.
 
+### Multi-Source Event Windows
+
+`awaitItem`/`awaitComplete` assert a strict per-turbine order, which makes tests over several concurrent flows fragile: any interleaving that satisfies your real ordering constraints should pass.
+`awaitWindow` asserts a bounded window of events across multiple named sources without imposing an order *between* sources:
+
+```kotlin
+runTest {
+  turbineScope {
+    val a = flowOf(1, 2).testIn(backgroundScope, name = "a")
+    val b = flowOf("x").testIn(backgroundScope, name = "b")
+    awaitWindow {
+      source(a).apply {
+        expectItem("one") { it == 1 }
+        expectItem("two") { it == 2 } // 'a' emits 1 before 2
+        expectComplete()
+      }
+      source(b).apply {
+        expectItem { it == "x" }
+        expectTerminal()
+      }
+      expectAnyOf(a.matchingItem { it == 1 }, b.matchingItem { it == "x" })
+    }
+  }
+}
+```
+
+Within a window:
+
+* Expectations declared on the same `source` are matched in declaration order against that source's event stream; no ordering is imposed across sources.
+* `expectItem`/`expectItems(n)` expect an exact number of items; item matchers are only invoked with item values, never with errors or completion.
+* `expectComplete`, `expectError`, and `expectTerminal` expect a final terminal event.
+* `expectAnyOf` expects exactly one of its alternatives to occur, whichever source produces it first.
+* Every event a bound source produces while the window is open must be accounted for by an expectation; an unaccounted item fails the window.
+
+The window is bounded: it ends as soon as all expectations are satisfied, and fails on the current Turbine timeout (see [Timeouts](#timeouts), overridable per window with `awaitWindow(timeout = ...)`), on a source terminating with unsatisfiable expectations, or on an unexpected event.
+Cancellation of the calling coroutine or its parent scope deterministically ends the wait.
+
+**`awaitWindow` is consuming, not transactional.** Events read inside the window stay consumed even when the window fails, uniformly across all failure paths (timeout, unexpected event, termination).
+They are never returned to the source turbines.
+On success the consumed events are returned as a list of `WindowEvent`s; on failure they are listed in the error message along with the expectations still unsatisfied and those made impossible by termination:
+
+```
+Window assertion failed: expectations can no longer be satisfied
+Consumed events:
+ - a: Item(1)
+ - a: Complete
+Unsatisfied expectations:
+ - b: item
+Impossible expectations (source terminated):
+ - a: item
+```
+
+Each event is consumed exactly once and matched in O(1) against its source's head expectation plus pending `expectAnyOf` alternatives, so a window costs O(events + alternatives).
+
 ### Consuming All Events
 
 Failing to consume all events before the end of a flow-based `Turbine`'s validation block will fail your test:

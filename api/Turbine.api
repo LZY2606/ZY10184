@@ -102,3 +102,40 @@ public final class app/cash/turbine/TurbineKt {
 public abstract interface class app/cash/turbine/TurbineTestContext : app/cash/turbine/ReceiveTurbine, app/cash/turbine/TurbineContext {
 }
 
+public final class app/cash/turbine/TurbineWindow {
+	public final fun expectAnyOf ([Lapp/cash/turbine/WindowAlternative;)V
+	public final fun source (Lapp/cash/turbine/ReceiveTurbine;Ljava/lang/String;)Lapp/cash/turbine/WindowSource;
+	public static synthetic fun source$default (Lapp/cash/turbine/TurbineWindow;Lapp/cash/turbine/ReceiveTurbine;Ljava/lang/String;ILjava/lang/Object;)Lapp/cash/turbine/WindowSource;
+}
+
+public final class app/cash/turbine/WindowAlternative {
+}
+
+public final class app/cash/turbine/WindowEvent {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvent ()Lapp/cash/turbine/Event;
+	public final fun getSourceName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class app/cash/turbine/WindowKt {
+	public static final fun awaitWindow-hhJSO8g (Lapp/cash/turbine/TurbineContext;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun awaitWindow-hhJSO8g$default (Lapp/cash/turbine/TurbineContext;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class app/cash/turbine/WindowSource {
+	public final fun expectComplete ()V
+	public final fun expectError (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectError$default (Lapp/cash/turbine/WindowSource;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectItem (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectItem$default (Lapp/cash/turbine/WindowSource;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectItems (ILjava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectItems$default (Lapp/cash/turbine/WindowSource;ILjava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectTerminal ()V
+	public final fun getName ()Ljava/lang/String;
+	public final fun matchingItem (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lapp/cash/turbine/WindowAlternative;
+	public static synthetic fun matchingItem$default (Lapp/cash/turbine/WindowSource;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lapp/cash/turbine/WindowAlternative;
+	public final fun matchingTerminal ()Lapp/cash/turbine/WindowAlternative;
+}
+
