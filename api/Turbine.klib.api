@@ -6,6 +6,22 @@
 // - Show declarations: true
 
 // Library unique name: <Turbine>
+open annotation class app.cash.turbine/TurbineWindowDsl : kotlin/Annotation { // app.cash.turbine/TurbineWindowDsl|null[0]
+    constructor <init>() // app.cash.turbine/TurbineWindowDsl.<init>|<init>(){}[0]
+}
+
+final enum class app.cash.turbine/EventWindowKind : kotlin/Enum<app.cash.turbine/EventWindowKind> { // app.cash.turbine/EventWindowKind|null[0]
+    enum entry Complete // app.cash.turbine/EventWindowKind.Complete|null[0]
+    enum entry Error // app.cash.turbine/EventWindowKind.Error|null[0]
+    enum entry Item // app.cash.turbine/EventWindowKind.Item|null[0]
+
+    final val entries // app.cash.turbine/EventWindowKind.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<app.cash.turbine/EventWindowKind> // app.cash.turbine/EventWindowKind.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): app.cash.turbine/EventWindowKind // app.cash.turbine/EventWindowKind.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<app.cash.turbine/EventWindowKind> // app.cash.turbine/EventWindowKind.values|values#static(){}[0]
+}
+
 abstract interface <#A: kotlin/Any?> app.cash.turbine/ReceiveTurbine { // app.cash.turbine/ReceiveTurbine|null[0]
     abstract fun asChannel(): kotlinx.coroutines.channels/ReceiveChannel<#A> // app.cash.turbine/ReceiveTurbine.asChannel|asChannel(){}[0]
     abstract fun ensureAllEventsConsumed() // app.cash.turbine/ReceiveTurbine.ensureAllEventsConsumed|ensureAllEventsConsumed(){}[0]
@@ -68,6 +84,34 @@ sealed interface <#A: out kotlin/Any?> app.cash.turbine/Event { // app.cash.turb
     }
 }
 
+final class <#A: kotlin/Any?> app.cash.turbine/NamedReceiveTurbine { // app.cash.turbine/NamedReceiveTurbine|null[0]
+    final val name // app.cash.turbine/NamedReceiveTurbine.name|{}name[0]
+        final fun <get-name>(): kotlin/String // app.cash.turbine/NamedReceiveTurbine.name.<get-name>|<get-name>(){}[0]
+    final val turbine // app.cash.turbine/NamedReceiveTurbine.turbine|{}turbine[0]
+        final fun <get-turbine>(): app.cash.turbine/ReceiveTurbine<#A> // app.cash.turbine/NamedReceiveTurbine.turbine.<get-turbine>|<get-turbine>(){}[0]
+}
+
+final class app.cash.turbine/EventWindowAnyOfBuilder { // app.cash.turbine/EventWindowAnyOfBuilder|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, app.cash.turbine/NamedReceiveTurbine<*>>) // app.cash.turbine/EventWindowAnyOfBuilder.<init>|<init>(kotlin.collections.Map<kotlin.String,app.cash.turbine.NamedReceiveTurbine<*>>){}[0]
+
+    final fun complete(kotlin/String, kotlin/String? = ...) // app.cash.turbine/EventWindowAnyOfBuilder.complete|complete(kotlin.String;kotlin.String?){}[0]
+    final fun error(kotlin/String, kotlin/String? = ..., kotlin/Function1<kotlin/Throwable, kotlin/Boolean>? = ...) // app.cash.turbine/EventWindowAnyOfBuilder.error|error(kotlin.String;kotlin.String?;kotlin.Function1<kotlin.Throwable,kotlin.Boolean>?){}[0]
+    final fun item(kotlin/String, kotlin/Any?, kotlin/String? = ...) // app.cash.turbine/EventWindowAnyOfBuilder.item|item(kotlin.String;kotlin.Any?;kotlin.String?){}[0]
+    final fun item(kotlin/String, kotlin/String? = ..., kotlin/Function1<kotlin/Any?, kotlin/Boolean>? = ...) // app.cash.turbine/EventWindowAnyOfBuilder.item|item(kotlin.String;kotlin.String?;kotlin.Function1<kotlin.Any?,kotlin.Boolean>?){}[0]
+}
+
+final class app.cash.turbine/EventWindowBuilder { // app.cash.turbine/EventWindowBuilder|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, app.cash.turbine/NamedReceiveTurbine<*>>) // app.cash.turbine/EventWindowBuilder.<init>|<init>(kotlin.collections.Map<kotlin.String,app.cash.turbine.NamedReceiveTurbine<*>>){}[0]
+
+    final fun expectAnyOf(kotlin/String? = ..., kotlin/Function1<app.cash.turbine/EventWindowAnyOfBuilder, kotlin/Unit>) // app.cash.turbine/EventWindowBuilder.expectAnyOf|expectAnyOf(kotlin.String?;kotlin.Function1<app.cash.turbine.EventWindowAnyOfBuilder,kotlin.Unit>){}[0]
+    final fun expectComplete(kotlin/String, kotlin/String? = ...) // app.cash.turbine/EventWindowBuilder.expectComplete|expectComplete(kotlin.String;kotlin.String?){}[0]
+    final fun expectError(kotlin/String, kotlin/String? = ..., kotlin/Function1<kotlin/Throwable, kotlin/Boolean>? = ...) // app.cash.turbine/EventWindowBuilder.expectError|expectError(kotlin.String;kotlin.String?;kotlin.Function1<kotlin.Throwable,kotlin.Boolean>?){}[0]
+    final fun expectItem(kotlin/String, kotlin/Any?, kotlin/String? = ...) // app.cash.turbine/EventWindowBuilder.expectItem|expectItem(kotlin.String;kotlin.Any?;kotlin.String?){}[0]
+    final fun expectItem(kotlin/String, kotlin/String? = ..., kotlin/Function1<kotlin/Any?, kotlin/Boolean>? = ...) // app.cash.turbine/EventWindowBuilder.expectItem|expectItem(kotlin.String;kotlin.String?;kotlin.Function1<kotlin.Any?,kotlin.Boolean>?){}[0]
+    final fun expectItems(kotlin/String, kotlin/Int, kotlin/String? = ..., kotlin/Function1<kotlin/Any?, kotlin/Boolean>? = ...) // app.cash.turbine/EventWindowBuilder.expectItems|expectItems(kotlin.String;kotlin.Int;kotlin.String?;kotlin.Function1<kotlin.Any?,kotlin.Boolean>?){}[0]
+}
+
+final fun <#A: kotlin/Any?> (app.cash.turbine/ReceiveTurbine<#A>).app.cash.turbine/named(kotlin/String): app.cash.turbine/NamedReceiveTurbine<#A> // app.cash.turbine/named|named@app.cash.turbine.ReceiveTurbine<0:0>(kotlin.String){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (app.cash.turbine/Turbine<#A>).app.cash.turbine/plusAssign(#A) // app.cash.turbine/plusAssign|plusAssign@app.cash.turbine.Turbine<0:0>(0:0){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/expectMostRecentItem(kotlin/String? = ...): #A // app.cash.turbine/expectMostRecentItem|expectMostRecentItem@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/expectNoEvents(kotlin/String? = ...) // app.cash.turbine/expectNoEvents|expectNoEvents@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.String?){0§<kotlin.Any?>}[0]
@@ -84,4 +128,5 @@ final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<
 final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.channels/ReceiveChannel<#A>).app.cash.turbine/skipItems(kotlin/Int, kotlin/String? = ...) // app.cash.turbine/skipItems|skipItems@kotlinx.coroutines.channels.ReceiveChannel<0:0>(kotlin.Int;kotlin.String?){0§<kotlin.Any?>}[0]
 final suspend fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).app.cash.turbine/test(kotlin.time/Duration? = ..., kotlin/String? = ..., kotlin.coroutines/SuspendFunction1<app.cash.turbine/TurbineTestContext<#A>, kotlin/Unit>) // app.cash.turbine/test|test@kotlinx.coroutines.flow.Flow<0:0>(kotlin.time.Duration?;kotlin.String?;kotlin.coroutines.SuspendFunction1<app.cash.turbine.TurbineTestContext<0:0>,kotlin.Unit>){0§<kotlin.Any?>}[0]
 final suspend fun <#A: kotlin/Any?> app.cash.turbine/withTurbineTimeout(kotlin.time/Duration, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A>): #A // app.cash.turbine/withTurbineTimeout|withTurbineTimeout(kotlin.time.Duration;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+final suspend fun app.cash.turbine/expectEventWindow(kotlin/Array<out app.cash.turbine/NamedReceiveTurbine<*>>..., kotlin.time/Duration? = ..., kotlin/Function1<app.cash.turbine/EventWindowBuilder, kotlin/Unit>) // app.cash.turbine/expectEventWindow|expectEventWindow(kotlin.Array<out|app.cash.turbine.NamedReceiveTurbine<*>>...;kotlin.time.Duration?;kotlin.Function1<app.cash.turbine.EventWindowBuilder,kotlin.Unit>){}[0]
 final suspend fun app.cash.turbine/turbineScope(kotlin.time/Duration? = ..., kotlin.coroutines/SuspendFunction1<app.cash.turbine/TurbineContext, kotlin/Unit>) // app.cash.turbine/turbineScope|turbineScope(kotlin.time.Duration?;kotlin.coroutines.SuspendFunction1<app.cash.turbine.TurbineContext,kotlin.Unit>){}[0]

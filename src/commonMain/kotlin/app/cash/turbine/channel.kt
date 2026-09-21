@@ -87,7 +87,7 @@ public suspend fun <T> ReceiveChannel<T>.awaitEvent(name: String? = null): Event
   }
 }
 
-private suspend fun <T> withAppropriateTimeout(
+internal suspend fun <T> withAppropriateTimeout(
   timeout: Duration,
   block: suspend CoroutineScope.() -> T,
 ): T {

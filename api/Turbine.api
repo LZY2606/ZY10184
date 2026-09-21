@@ -52,6 +52,49 @@ public final class app/cash/turbine/Event$Item : app/cash/turbine/Event {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class app/cash/turbine/EventWindowAnyOfBuilder {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun complete (Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun complete$default (Lapp/cash/turbine/EventWindowAnyOfBuilder;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun error (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun error$default (Lapp/cash/turbine/EventWindowAnyOfBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun item (Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;)V
+	public final fun item (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun item$default (Lapp/cash/turbine/EventWindowAnyOfBuilder;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun item$default (Lapp/cash/turbine/EventWindowAnyOfBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class app/cash/turbine/EventWindowBuilder {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun expectAnyOf (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectAnyOf$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectComplete (Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun expectComplete$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun expectError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectError$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectItem (Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;)V
+	public final fun expectItem (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectItem$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun expectItem$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun expectItems (Ljava/lang/String;ILjava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun expectItems$default (Lapp/cash/turbine/EventWindowBuilder;Ljava/lang/String;ILjava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class app/cash/turbine/EventWindowKind : java/lang/Enum {
+	public static final field Complete Lapp/cash/turbine/EventWindowKind;
+	public static final field Error Lapp/cash/turbine/EventWindowKind;
+	public static final field Item Lapp/cash/turbine/EventWindowKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lapp/cash/turbine/EventWindowKind;
+	public static fun values ()[Lapp/cash/turbine/EventWindowKind;
+}
+
+public final class app/cash/turbine/EventWindowKt {
+	public static final fun expectEventWindow-hhJSO8g ([Lapp/cash/turbine/NamedReceiveTurbine;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun expectEventWindow-hhJSO8g$default ([Lapp/cash/turbine/NamedReceiveTurbine;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun named (Lapp/cash/turbine/ReceiveTurbine;Ljava/lang/String;)Lapp/cash/turbine/NamedReceiveTurbine;
+}
+
 public final class app/cash/turbine/FlowKt {
 	public static final fun test-C2H2yOE (Lkotlinx/coroutines/flow/Flow;Lkotlin/time/Duration;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun test-C2H2yOE$default (Lkotlinx/coroutines/flow/Flow;Lkotlin/time/Duration;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -59,6 +102,11 @@ public final class app/cash/turbine/FlowKt {
 	public static synthetic fun testIn-5_5nbZA$default (Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineScope;Lkotlin/time/Duration;Ljava/lang/String;ILjava/lang/Object;)Lapp/cash/turbine/ReceiveTurbine;
 	public static final fun turbineScope-k1IrOU0 (Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun turbineScope-k1IrOU0$default (Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class app/cash/turbine/NamedReceiveTurbine {
+	public final fun getName ()Ljava/lang/String;
+	public final fun getTurbine ()Lapp/cash/turbine/ReceiveTurbine;
 }
 
 public abstract interface class app/cash/turbine/ReceiveTurbine {
@@ -100,5 +148,8 @@ public final class app/cash/turbine/TurbineKt {
 }
 
 public abstract interface class app/cash/turbine/TurbineTestContext : app/cash/turbine/ReceiveTurbine, app/cash/turbine/TurbineContext {
+}
+
+public abstract interface annotation class app/cash/turbine/TurbineWindowDsl : java/lang/annotation/Annotation {
 }
 

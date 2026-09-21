@@ -4,7 +4,11 @@
 [Unreleased]: https://github.com/cashapp/turbine/compare/1.2.0...HEAD
 
 ### Added
-- Nothing yet!
+- Multi-source event window assertions: bind several `ReceiveTurbine`s with the `named` infix
+  function and use `expectEventWindow { expectItem / expectItems / expectAnyOf / expectComplete /
+  expectError }` to consume a bounded, partially-ordered window without imposing ordering between
+  sources. Failures report consumed, remaining, and no-longer-satisfiable expectations plus the
+  events consumed (which are not restored on failure).
 
 ### Changed
 - Nothing yet!

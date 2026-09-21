@@ -131,6 +131,73 @@ Otherwise, make sure to call one of the following methods before the end of your
 
 Otherwise, your test will hang.
 
+### Multi-Source Event Windows
+
+Sometimes the legal behavior of several concurrent flows is only a _partial order_:
+within one source events have a required order, but no order exists between sources.
+Asserting one global sequence with interleaved `awaitItem()` calls makes such tests brittle.
+`expectEventWindow` consumes a bounded window of events from several named turbines,
+enforcing per-source order while leaving the order between sources free.
+
+```kotlin
+runTest {
+  turbineScope {
+    val one = flowOf(1, 2).testIn(backgroundScope, name = "one")
+    val two = flowOf("a", "b").testIn(backgroundScope, name = "two")
+
+    expectEventWindow(two named "two", one named "one") {
+      expectItem("one", value = 1)
+      expectItem("two", value = "a")   // may arrive before or after one's first item
+      expectItem("one", value = 2)     // one's own order is still enforced
+      expectItem("two", value = "b")
+      expectComplete("one")
+      expectComplete("two")
+    }
+  }
+}
+```
+
+Bind each turbine to a stable label with the `named` infix function.
+Inside the block:
+
+* `expectItem(source, value = …)` / `expectItem(source) { … }` matches one item.
+* `expectItems(source, count = n)` matches an exact number of items, in source order.
+* `expectComplete(source)` and `expectError(source) { … }` match the terminal events.
+* `expectAnyOf { item(…); complete(…); error(…) }` matches exactly one of the alternatives;
+  alternatives may live on different sources, so it imposes no order between them.
+
+Window matching is strict: an event that cannot match the next pending expectation of its source
+fails immediately (for example, an error is never fed to an item matcher), and terminating a source
+marks its remaining expectations as no longer satisfiable.
+
+#### Failure reports and transactional semantics
+
+A window times out after the current Turbine timeout (or an explicit `timeout = …`),
+respecting `withTurbineTimeout` and virtual time just like the `await*` methods — no real sleeping
+is added to the test dispatcher. Failures always list three sections plus the raw consumed events:
+
+```
+Event window failed for window of "a", "b": No matching event window produced in 1s
+Consumed:
+ - #1 any item from "a" <- Item(1)
+Remaining to be met:
+ - #2 any item from "b"
+No longer satisfiable (source terminated):
+ - (none)
+Events consumed during the window (not restored):
+ - a: Item(1)
+```
+
+Event consumption is **non-transactional**: once an event is consumed by the window it stays
+consumed whether the window succeeds or fails, matching the behavior of `awaitItem` and friends.
+The "not restored" list makes the post-failure state of every turbine explicit, so subsequent
+assertions see a deterministic state. Cancelling the calling coroutine ends every internal wait
+deterministically with a `CancellationException`.
+
+The window runs on every supported multiplatform target and keeps all logic in-process.
+With `E` consumed events and `R` pending `expectAnyOf` alternatives the worst-case cost is
+`O(E × R)` time and `O(E + R)` memory; without `expectAnyOf` groups matching is `O(E)`.
+
 ### Consuming All Events
 
 Failing to consume all events before the end of a flow-based `Turbine`'s validation block will fail your test:

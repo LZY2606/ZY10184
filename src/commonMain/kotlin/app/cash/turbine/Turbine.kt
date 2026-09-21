@@ -101,7 +101,10 @@ internal class ChannelTurbine<T>(
   private val collectJob: Job?,
   private val timeout: Duration?,
   private val name: String?,
-) : Turbine<T> {
+) : Turbine<T>, NamedEventWindowSource {
+  override val windowTurbineName: String?
+    get() = name
+
   private suspend fun <T> withTurbineTimeout(block: suspend () -> T): T {
     return if (timeout != null) {
       withTurbineTimeout(timeout) { block() }
